@@ -13,9 +13,10 @@ Description: Implements a manifold dimension reuduction algorithm based on work
     originally due to Nick Masse and Gregory Jefferis.
 License: GPL-3
 LazyData: TRUE
-Imports:
+Imports: 
     Rcpp (>= 0.11.6),
     nabor,
     RcppEigen
-LinkingTo:
+LinkingTo: 
     Rcpp
+Suggests: testthat
