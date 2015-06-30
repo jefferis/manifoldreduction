@@ -122,9 +122,8 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
       Pnew[nnidxsForThisPoint]=Pnew[nnidxsForThisPoint]+xx[u]*Px
       # add to every point in gammaNew a fraction of
       # the original coords of current point * Px weight
-      for (i1 in 1:n)
-        gammaNew[i1,nnidxsForThisPoint]=gammaNew[i1,nnidxsForThisPoint]+
-        ((xcoords[i1,u]*xx[u])*Px)
+      gammaNew[,nnidxsForThisPoint]=gammaNew[,nnidxsForThisPoint]+
+        outer(xcoords[,u]*xx[u], Px)
     }
 
     Pnew=Pnew+10^(-30)
