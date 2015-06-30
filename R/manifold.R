@@ -40,6 +40,9 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
   gamma=xcoords;
   n=dim(xcoords)[1]
   K=dim(xcoords)[2]
+  if(n>K)
+    warning("dimensionality is greater than number of points.",
+            " Perhaps you need to transpose your input!")
 
   P=rep_len(1/K,K);
   # a mask on the points in xcoords
