@@ -19,6 +19,9 @@ compute the local dimensionality.}
 
 \item{knntouse}{Number of nearest neighbours to consider when calculating
   interactions.}
+
+\item{maxDim}{The local dimensionality below which points are fixed. The
+default value of \code{1.2} enforces a quasi-1D manifold.}
 }
 \value{
 a list with the following elements: \itemize{
@@ -37,10 +40,10 @@ a list with the following elements: \itemize{
 This implements the algorithm described in Optimal Manifold
   Representation of Data: An Information Theoretic Approach Denis Chigirev
   and William Bialek which attempts to reduce higher dimensional data onto a
-  1D manifold
+  lower dimensional manifold (by default 1D).
 }
 \references{
 \href{http://papers.nips.cc/paper/2399-optimal-manifold-representation-of-data-an-information-theoretic-approach.pdf}{Optimal
-  Manifold Representation of Data: An Information Theoretic Approach}
+Manifold Representation of Data: An Information Theoretic Approach}
 }
 
