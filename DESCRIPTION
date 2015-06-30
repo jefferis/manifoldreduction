@@ -1,0 +1,21 @@
+Package: manifoldreduction
+Type: Package
+Title: Manifold Dimension Reduction after Chigirev and Bialek
+Version: 0.1
+Authors@R: c(
+    person("Gregory", "Jefferis", email = "jefferis@gmail.com",
+    role = c("aut", "cph", "cre")),
+    person("Nicolas", "Masse", role=c("aut")))
+Description: Implements a manifold dimension reuduction algorithm based on work
+    of Chigirev and Bialek (NIPS 2004). This takes arbitrary dimension data and
+    tries to move the points onto a lower dimensional manifold using an
+    information theoretic approach. This implementation is based on Matlab code
+    originally due to Nick Masse and Gregory Jefferis.
+License: GPL-3
+LazyData: TRUE
+Imports:
+    Rcpp (>= 0.11.6),
+    nabor,
+    RcppEigen
+LinkingTo:
+    Rcpp
