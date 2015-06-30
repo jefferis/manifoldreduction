@@ -68,16 +68,16 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
     if(z>5 && K>=20) {
       nnres=nabor::knn(t(gamma), k=20)
       # nb original algorithm returned squared distance
-      nndist=t(nnres$nn.dists)^2
+      nndist=t(nnres$nn.dists[,2:20])^2
       log2to20=log(2:20)
       for(i in 1:K) {
-        if(nndist[20,i]<=100){
-          numzeros=sum(nndist[2:20,i]==0)
+        if(nndist[19,i]<=100){
+          numzeros=sum(nndist[,i]==0)
           if(numzeros>0){
             #some points are right on top of this one so let's say
             dimension[i]=0
           } else {
-            X=cbind(rep_len(1,19), log(sqrt(nndist[2:20,i])))
+            X=cbind(rep_len(1,19), log(sqrt(nndist[,i])))
             if(solvemethod<0) linfit=qr.solve(X, log2to20)
             else linfit=fastLmPure(X, log2to20, method = solvemethod)$coefficients
             # set dimensionality of this point to gradient
@@ -88,7 +88,7 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
         }
       }
       # Vectorised calculation of moveInd
-      moveInd=which(dimension>maxDim & nndist[20,]<=100)
+      moveInd=which(dimension>maxDim & nndist[19,]<=100)
     }
 
     gammaNew=matrix(0, n, K)
