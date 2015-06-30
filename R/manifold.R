@@ -27,6 +27,7 @@
 #'
 #'   }
 #' @importFrom RcppEigen fastLmPure
+#' @export
 #' @references
 #' \href{http://papers.nips.cc/paper/2399-optimal-manifold-representation-of-data-an-information-theoretic-approach.pdf}{Optimal
 #' Manifold Representation of Data: An Information Theoretic Approach}
