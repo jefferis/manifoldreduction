@@ -31,7 +31,7 @@
 #' \href{http://papers.nips.cc/paper/2399-optimal-manifold-representation-of-data-an-information-theoretic-approach.pdf}{Optimal
 #' Manifold Representation of Data: An Information Theoretic Approach}
 manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
-                             solvemethod=0L, knntouse=75L){
+                             solvemethod=0L, maxDim=1.2, knntouse=75L){
   # % K is the number of points of the low dimensional manifold
   # % xx is the original data (should be between 0 and 1)
   # % lamba determines the tradeoff F(M,Pm) = D + lambda*I
