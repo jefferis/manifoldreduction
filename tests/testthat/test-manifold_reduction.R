@@ -7,4 +7,8 @@ test_that("manifold_reduction works",{
   xyz=ind2coord(x)
   xyzm=manifold_reduction(t(xyz), no_iterations = 15)
   expect_equal(xyzm, readRDS('testdata/xyzm.rds'))
+
+  # warn for fishy points dimensions
+  expect_warning(manifold_reduction(xyz, no_iterations = 1))
+
 })
