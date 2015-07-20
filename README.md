@@ -11,13 +11,10 @@ devtools::install_github("jefferis/manifoldreduction")
 # use
 library(manifoldreduction)
 
-# run examples
-example("xxx")
-
 # get overview help for package
 ?manifoldreduction
 # help for functions
-?xxx
+?manifold_reduction
 
 # run tests
 library(testthat)
