@@ -94,7 +94,8 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
     gammaNew=matrix(0, n, K)
     Pnew=rep(0,K)
     xx=xx/sum(xx)
-    message('kpoints: ',kpoints,' moveInd: ',length(moveInd))
+    if(!Verbose)
+      message('kpoints: ',kpoints,' moveInd: ',length(moveInd))
 
     # find kpoints nearest neighbours from gamma for each xcoord
     nnres = nabor::knn(t(gamma), query=t(xcoords), k=kpoints)
