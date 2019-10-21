@@ -14,11 +14,8 @@ Description: Implements a manifold dimension reuduction algorithm based on work
 License: GPL-3
 LazyData: TRUE
 Imports:
-    Rcpp (>= 0.11.6),
     nabor,
     RcppEigen
-LinkingTo:
-    Rcpp
 Suggests:
     testthat,
     nat
