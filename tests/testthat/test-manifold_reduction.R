@@ -5,7 +5,7 @@ test_that("manifold_reduction works",{
   library(nat)
   x=read.im3d("testdata/testneurons_thresh.nrrd")
   xyz=ind2coord(x)
-  xyzm=manifold_reduction(t(xyz), no_iterations = 15)
+  xyzm=manifold_reduction(t(xyz), no_iterations = 15, neighbourhood_size = 20)
   expect_known_value(xyzm, file = 'testdata/xyzm.rds')
 
   # warn for fishy points dimensions

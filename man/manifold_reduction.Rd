@@ -5,7 +5,8 @@
 \title{Compute Optimal Manifold Representation of Points}
 \usage{
 manifold_reduction(xcoords, no_iterations = 45L, Verbose = TRUE,
-  solvemethod = 0L, maxDim = 1.2, knntouse = 75L)
+  solvemethod = 0L, maxDim = 1.2, knntouse = 75L,
+  neighbourhood_size = 20L)
 }
 \arguments{
 \item{xcoords}{d x N matrix of d-dimensional data points}
@@ -22,6 +23,9 @@ default value of \code{1.2} enforces a quasi-1D manifold.}
 
 \item{knntouse}{Number of nearest neighbours to consider when calculating
 interactions.}
+
+\item{neighbourhood_size}{Number of nearest neighbours to consider when calculating
+local dimensionality (default 20).}
 }
 \value{
 a list with the following elements: \itemize{
@@ -30,7 +34,7 @@ a list with the following elements: \itemize{
 
   \item P
 
-  \item lamba determines the tradeoff F(M,Pm) = D + lambda*I
+  \item lambda determines the tradeoff F(M,Pm) = D + lambda*I
 
   \item dimension the local dimensionality of the manifold
 

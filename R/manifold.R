@@ -9,6 +9,8 @@
 #'   default value of \code{1.2} enforces a quasi-1D manifold.
 #' @param knntouse Number of nearest neighbours to consider when calculating
 #'   interactions.
+#' @param neighbourhood_size Number of nearest neighbours to consider when calculating
+#'   local dimensionality (default 20).
 #'
 #' @description This implements the algorithm described in Optimal Manifold
 #'   Representation of Data: An Information Theoretic Approach Denis Chigirev
@@ -21,7 +23,7 @@
 #'
 #'   \item P
 #'
-#'   \item lamba determines the tradeoff F(M,Pm) = D + lambda*I
+#'   \item lambda determines the tradeoff F(M,Pm) = D + lambda*I
 #'
 #'   \item dimension the local dimensionality of the manifold
 #'
@@ -32,7 +34,8 @@
 #' \href{http://papers.nips.cc/paper/2399-optimal-manifold-representation-of-data-an-information-theoretic-approach.pdf}{Optimal
 #' Manifold Representation of Data: An Information Theoretic Approach}
 manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
-                             solvemethod=0L, maxDim=1.2, knntouse=75L){
+                             solvemethod=0L, maxDim=1.2, knntouse=75L,
+                             neighbourhood_size=20L){
   # % K is the number of points of the low dimensional manifold
   # % xx is the original data (should be between 0 and 1)
   # % lamba determines the tradeoff F(M,Pm) = D + lambda*I
@@ -65,19 +68,19 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
     #   % kpoints=min([K max([75 ceil(1.5*K^(1/3))])]);
     kpoints=pmin(K, knntouse)
 
-    if(z>5 && K>=20) {
-      nnres=nabor::knn(t(gamma), k=20)
+    if(z>5 && K>=neighbourhood_size) {
+      nnres=nabor::knn(t(gamma), k=neighbourhood_size)
       # nb original algorithm returned squared distance
-      nndist=t(nnres$nn.dists[,2:20])^2
-      log2to20=log(2:20)
+      nndist=t(nnres$nn.dists[,2:neighbourhood_size])^2
+      log2to20=log(2:neighbourhood_size)
       for(i in 1:K) {
-        if(nndist[19,i]<=100){
+        if(nndist[(neighbourhood_size-1L),i]<=100){
           numzeros=sum(nndist[,i]==0)
           if(numzeros>0){
             #some points are right on top of this one so let's say
             dimension[i]=0
           } else {
-            X=cbind(rep_len(1,19), log(sqrt(nndist[,i])))
+            X=cbind(rep_len(1,(neighbourhood_size-1L)), log(sqrt(nndist[,i])))
             if(solvemethod<0) linfit=qr.solve(X, log2to20)
             else linfit=fastLmPure(X, log2to20, method = solvemethod)$coefficients
             # set dimensionality of this point to gradient
@@ -88,7 +91,7 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
         }
       }
       # Vectorised calculation of moveInd
-      moveInd=which(dimension>maxDim & nndist[19,]<=100)
+      moveInd=which(dimension>maxDim & nndist[(neighbourhood_size-1L),]<=100)
     }
 
     gammaNew=matrix(0, n, K)
