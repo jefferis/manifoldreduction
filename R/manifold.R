@@ -94,7 +94,7 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
     gammaNew=matrix(0, n, K)
     Pnew=rep(0,K)
     xx=xx/sum(xx)
-    if(!Verbose)
+    if(Verbose)
       message('kpoints: ',kpoints,' moveInd: ',length(moveInd))
 
     # find kpoints nearest neighbours from gamma for each xcoord
