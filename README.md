@@ -7,6 +7,7 @@
 
 [![Travis build
 status](https://travis-ci.org/jefferis/manifoldreduction.svg?branch=master)](https://travis-ci.org/jefferis/manifoldreduction)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://jefferis.github.io/manifoldreduction/reference/)
 <!-- badges: end -->
 
 An implementation of Chigirev and Bialek’s algorithm described in
@@ -25,8 +26,6 @@ devtools::install_github("jefferis/manifoldreduction")
 # use
 library(manifoldreduction)
 
-# get overview help for package
-?manifoldreduction
 # help for functions
 ?manifold_reduction
 

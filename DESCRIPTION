@@ -1,10 +1,10 @@
 Package: manifoldreduction
 Type: Package
 Title: Manifold Dimension Reduction after Chigirev and Bialek
-Version: 0.1
+Version: 0.2
 Authors@R: c(
-    person("Gregory", "Jefferis", email = "jefferis@gmail.com",
-    role = c("aut", "cph", "cre")),
+    person("Gregory","Jefferis", email="jefferis@gmail.com", 
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0587-9355")),
     person("Nicolas", "Masse", role=c("aut")))
 Description: Implements a manifold dimension reuduction algorithm based on work
     of Chigirev and Bialek (NIPS 2004). This takes arbitrary dimension data and
@@ -21,3 +21,5 @@ Suggests:
     nat
 RoxygenNote: 6.1.1
 Encoding: UTF-8
+URL: https://github.com/jefferis/manifoldreduction
+BugReports: https://github.com/jefferis/manifoldreduction/issues
