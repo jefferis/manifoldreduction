@@ -1,20 +1,20 @@
 #' Compute Optimal Manifold Representation of Points
 #'
-#' @param xcoords d x N matrix of d-dimensional data points
+#' @param coords d x N matrix of d-dimensional data points
 #' @param no_iterations The number of iterations to use
 #' @param Verbose Whether to print status messages
-#' @param solvemethod An integer from -1 to 5 determining the solver used to
-#'   compute the local dimensionality.
 #' @param maxDim The local dimensionality below which points are fixed. The
 #'   default value of \code{1.2} enforces a quasi-1D manifold.
 #' @param knntouse Number of nearest neighbours to consider when calculating
 #'   interactions.
-#' @param neighbourhood_size Number of nearest neighbours to consider when calculating
-#'   local dimensionality (default 20).
+#' @param neighbourhood_size Number of nearest neighbours to consider when
+#'   calculating local dimensionality (default 20).
+#' @param solvemethod An integer from -1 to 5 determining the solver used to
+#'   compute the local dimensionality.
 #'
 #' @description This implements the algorithm described in Optimal Manifold
-#'   Representation of Data: An Information Theoretic Approach Denis Chigirev
-#'   and William Bialek which attempts to reduce higher dimensional data onto a
+#'   Representation of Data: An Information Theoretic Approach by Denis Chigirev
+#'   and William Bialek, which attempts to reduce higher dimensional data onto a
 #'   lower dimensional manifold (by default 1D).
 #'
 #' @return a list with the following elements: \itemize{
@@ -33,16 +33,16 @@
 #' @references
 #' \href{http://papers.nips.cc/paper/2399-optimal-manifold-representation-of-data-an-information-theoretic-approach.pdf}{Optimal
 #' Manifold Representation of Data: An Information Theoretic Approach}
-manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
-                             solvemethod=0L, maxDim=1.2, knntouse=75L,
-                             neighbourhood_size=20L){
+manifold_reduction<-function(coords, no_iterations=45L, neighbourhood_size=20L,
+                             knntouse=75L, maxDim=1.2, Verbose=TRUE,
+                             solvemethod=0L){
   # % K is the number of points of the low dimensional manifold
   # % xx is the original data (should be between 0 and 1)
   # % lamba determines the tradeoff F(M,Pm) = D + lambda*I
   # % gamma will be new manifold positions
-  gamma=xcoords;
-  n=dim(xcoords)[1]
-  K=dim(xcoords)[2]
+  gamma=coords;
+  n=dim(coords)[1]
+  K=dim(coords)[2]
   if(n>K)
     warning("dimensionality is greater than number of points.",
             " Perhaps you need to transpose your input!")
@@ -101,7 +101,7 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
       message('kpoints: ',kpoints,' moveInd: ',length(moveInd))
 
     # find kpoints nearest neighbours from gamma for each xcoord
-    nnres = nabor::knn(t(gamma), query=t(xcoords), k=kpoints)
+    nnres = nabor::knn(t(gamma), query=t(coords), k=kpoints)
     nndist=t(nnres$nn.dists)^2
     nnidx=t(nnres$nn.idx)
 
@@ -127,7 +127,7 @@ manifold_reduction<-function(xcoords, no_iterations=45L, Verbose=TRUE,
       # add to every point in gammaNew a fraction of
       # the original coords of current point * Px weight
       gammaNew[,nnidxsForThisPoint]=gammaNew[,nnidxsForThisPoint]+
-        outer(xcoords[,u]*xx[u], Px)
+        outer(coords[,u]*xx[u], Px)
     }
 
     Pnew=Pnew+10^(-30)

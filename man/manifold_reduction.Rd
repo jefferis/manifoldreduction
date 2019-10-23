@@ -4,28 +4,28 @@
 \alias{manifold_reduction}
 \title{Compute Optimal Manifold Representation of Points}
 \usage{
-manifold_reduction(xcoords, no_iterations = 45L, Verbose = TRUE,
-  solvemethod = 0L, maxDim = 1.2, knntouse = 75L,
-  neighbourhood_size = 20L)
+manifold_reduction(coords, no_iterations = 45L,
+  neighbourhood_size = 20L, knntouse = 75L, maxDim = 1.2,
+  Verbose = TRUE, solvemethod = 0L)
 }
 \arguments{
-\item{xcoords}{d x N matrix of d-dimensional data points}
+\item{coords}{d x N matrix of d-dimensional data points}
 
 \item{no_iterations}{The number of iterations to use}
+
+\item{neighbourhood_size}{Number of nearest neighbours to consider when
+calculating local dimensionality (default 20).}
+
+\item{knntouse}{Number of nearest neighbours to consider when calculating
+interactions.}
+
+\item{maxDim}{The local dimensionality below which points are fixed. The
+default value of \code{1.2} enforces a quasi-1D manifold.}
 
 \item{Verbose}{Whether to print status messages}
 
 \item{solvemethod}{An integer from -1 to 5 determining the solver used to
 compute the local dimensionality.}
-
-\item{maxDim}{The local dimensionality below which points are fixed. The
-default value of \code{1.2} enforces a quasi-1D manifold.}
-
-\item{knntouse}{Number of nearest neighbours to consider when calculating
-interactions.}
-
-\item{neighbourhood_size}{Number of nearest neighbours to consider when calculating
-local dimensionality (default 20).}
 }
 \value{
 a list with the following elements: \itemize{
@@ -42,8 +42,8 @@ a list with the following elements: \itemize{
 }
 \description{
 This implements the algorithm described in Optimal Manifold
-  Representation of Data: An Information Theoretic Approach Denis Chigirev
-  and William Bialek which attempts to reduce higher dimensional data onto a
+  Representation of Data: An Information Theoretic Approach by Denis Chigirev
+  and William Bialek, which attempts to reduce higher dimensional data onto a
   lower dimensional manifold (by default 1D).
 }
 \references{
