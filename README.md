@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/jefferis/manifoldreduction.svg?branch=master)](https://travis-ci.org/jefferis/manifoldreduction)
 <!-- badges: end -->
 
 An implementation of Chigirev and Bialek’s algorithm described in
