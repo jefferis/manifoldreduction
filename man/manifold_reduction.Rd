@@ -4,20 +4,20 @@
 \alias{manifold_reduction}
 \title{Compute Optimal Manifold Representation of Points}
 \usage{
-manifold_reduction(coords, no_iterations = 45L,
-  neighbourhood_size = 20L, knntouse = 75L, maxDim = 1.2,
+manifold_reduction(coords, lambda = 2, neighbourhood_size = 20L,
+  knntouse = 75L, no_iterations = 45L, maxDim = 1.2,
   Verbose = TRUE, solvemethod = 0L)
 }
 \arguments{
 \item{coords}{d x N matrix of d-dimensional data points}
-
-\item{no_iterations}{The number of iterations to use}
 
 \item{neighbourhood_size}{Number of nearest neighbours to consider when
 calculating local dimensionality (default 20).}
 
 \item{knntouse}{Number of nearest neighbours to consider when calculating
 interactions.}
+
+\item{no_iterations}{The number of iterations to use}
 
 \item{maxDim}{The local dimensionality below which points are fixed. The
 default value of \code{1.2} enforces a quasi-1D manifold.}
@@ -26,6 +26,10 @@ default value of \code{1.2} enforces a quasi-1D manifold.}
 
 \item{solvemethod}{An integer from -1 to 5 determining the solver used to
 compute the local dimensionality.}
+
+\item{A}{spatial parameter that determines the interactions between
+neighbouring points according to the tradeoff F(M,Pm) = D + lambda*I (see
+original paper for details).}
 }
 \value{
 a list with the following elements: \itemize{

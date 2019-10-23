@@ -7,6 +7,9 @@
 #'   default value of \code{1.2} enforces a quasi-1D manifold.
 #' @param knntouse Number of nearest neighbours to consider when calculating
 #'   interactions.
+#' @param A spatial parameter that determines the interactions between
+#'   neighbouring points according to the tradeoff F(M,Pm) = D + lambda*I (see
+#'   original paper for details).
 #' @param neighbourhood_size Number of nearest neighbours to consider when
 #'   calculating local dimensionality (default 20).
 #' @param solvemethod An integer from -1 to 5 determining the solver used to
@@ -33,9 +36,9 @@
 #' @references
 #' \href{http://papers.nips.cc/paper/2399-optimal-manifold-representation-of-data-an-information-theoretic-approach.pdf}{Optimal
 #' Manifold Representation of Data: An Information Theoretic Approach}
-manifold_reduction<-function(coords, no_iterations=45L, neighbourhood_size=20L,
-                             knntouse=75L, maxDim=1.2, Verbose=TRUE,
-                             solvemethod=0L){
+manifold_reduction<-function(coords, lambda=2.0, neighbourhood_size=20L,
+                             knntouse=75L, no_iterations=45L, maxDim=1.2,
+                             Verbose=TRUE, solvemethod=0L){
   # % K is the number of points of the low dimensional manifold
   # % xx is the original data (should be between 0 and 1)
   # % lamba determines the tradeoff F(M,Pm) = D + lambda*I
@@ -48,14 +51,14 @@ manifold_reduction<-function(coords, no_iterations=45L, neighbourhood_size=20L,
             " Perhaps you need to transpose your input!")
 
   P=rep_len(1/K,K);
-  # a mask on the points in xcoords
+  # a mask on the points in coords
   xx=P;
 
-  lambda=2;
+  # points outside this region will be ignored when calculating dimensionality
+  neighbourhood_threshold=50*lambda;
   dimension=rep_len(3,K)
 
-  maxDim=1.2; # points with local dimensionality < maxDim will be fixed
-
+  log2to20=log(2:neighbourhood_size)
   moveInd=1:K
 
   for (z in 1:no_iterations){
@@ -72,9 +75,8 @@ manifold_reduction<-function(coords, no_iterations=45L, neighbourhood_size=20L,
       nnres=nabor::knn(t(gamma), k=neighbourhood_size)
       # nb original algorithm returned squared distance
       nndist=t(nnres$nn.dists[,2:neighbourhood_size])^2
-      log2to20=log(2:neighbourhood_size)
       for(i in 1:K) {
-        if(nndist[(neighbourhood_size-1L),i]<=100){
+        if(nndist[(neighbourhood_size-1L),i]<=neighbourhood_threshold){
           numzeros=sum(nndist[,i]==0)
           if(numzeros>0){
             #some points are right on top of this one so let's say
@@ -91,7 +93,7 @@ manifold_reduction<-function(coords, no_iterations=45L, neighbourhood_size=20L,
         }
       }
       # Vectorised calculation of moveInd
-      moveInd=which(dimension>maxDim & nndist[(neighbourhood_size-1L),]<=100)
+      moveInd=which(dimension>maxDim & nndist[(neighbourhood_size-1L),]<=neighbourhood_threshold)
     }
 
     gammaNew=matrix(0, n, K)
@@ -100,7 +102,7 @@ manifold_reduction<-function(coords, no_iterations=45L, neighbourhood_size=20L,
     if(Verbose)
       message('kpoints: ',kpoints,' moveInd: ',length(moveInd))
 
-    # find kpoints nearest neighbours from gamma for each xcoord
+    # find kpoints nearest neighbours from gamma for each coord
     nnres = nabor::knn(t(gamma), query=t(coords), k=kpoints)
     nndist=t(nnres$nn.dists)^2
     nnidx=t(nnres$nn.idx)
