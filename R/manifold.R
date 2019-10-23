@@ -7,7 +7,7 @@
 #'   default value of \code{1.2} enforces a quasi-1D manifold.
 #' @param knntouse Number of nearest neighbours to consider when calculating
 #'   interactions.
-#' @param A spatial parameter that determines the interactions between
+#' @param lambda A spatial parameter that determines the interactions between
 #'   neighbouring points according to the tradeoff F(M,Pm) = D + lambda*I (see
 #'   original paper for details).
 #' @param neighbourhood_size Number of nearest neighbours to consider when

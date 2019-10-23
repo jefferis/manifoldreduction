@@ -11,6 +11,10 @@ manifold_reduction(coords, lambda = 2, neighbourhood_size = 20L,
 \arguments{
 \item{coords}{d x N matrix of d-dimensional data points}
 
+\item{lambda}{A spatial parameter that determines the interactions between
+neighbouring points according to the tradeoff F(M,Pm) = D + lambda*I (see
+original paper for details).}
+
 \item{neighbourhood_size}{Number of nearest neighbours to consider when
 calculating local dimensionality (default 20).}
 
@@ -26,10 +30,6 @@ default value of \code{1.2} enforces a quasi-1D manifold.}
 
 \item{solvemethod}{An integer from -1 to 5 determining the solver used to
 compute the local dimensionality.}
-
-\item{A}{spatial parameter that determines the interactions between
-neighbouring points according to the tradeoff F(M,Pm) = D + lambda*I (see
-original paper for details).}
 }
 \value{
 a list with the following elements: \itemize{
